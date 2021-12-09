@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/pack/custom-model/build",
+  "command": "/usr/bin/c++   -I/home/armnn-devenv/flatbuffers/include -I/home/pack/custom-model/include   -std=c++11 -pthread   -o CMakeFiles/tm_yolov4_tiny.dir/src/json11.cpp.o -c /home/pack/custom-model/src/json11.cpp",
+  "file": "/home/pack/custom-model/src/json11.cpp"
+},
+{
+  "directory": "/home/pack/custom-model/build",
+  "command": "/usr/bin/c++   -I/home/armnn-devenv/flatbuffers/include -I/home/pack/custom-model/include   -std=c++11 -pthread   -o CMakeFiles/tm_yolov4_tiny.dir/src/create_model_sample.cpp.o -c /home/pack/custom-model/src/create_model_sample.cpp",
+  "file": "/home/pack/custom-model/src/create_model_sample.cpp"
+}
+]
