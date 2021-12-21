@@ -489,6 +489,7 @@ bool layer_maker::add_output(uint32_t id, std::string output_name, bool force_se
         output_id.push_back(one);
         seted_flag = true;
     }
+    this->output_num = output_id.size();
     if (seted_flag)
         return true;
     return false;
