@@ -15,3 +15,7 @@
 
 ### Result: open ../../model-flatbuffer/pzk-metadata.json success
 ### this model size is 3288
+
+## 4. Now You Can Use Shell Script To Build And Run
+- chmod +x run.sh
+- ./run.sh

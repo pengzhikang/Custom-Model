@@ -19,12 +19,15 @@ bool has_key(json11::Json j, std::string key)
 class min_meta
 {
 private:
+    void _Rubber();
     /* data */
 public:
     min_meta(){};
     min_meta(json11::Json onelayer);
     ~min_meta();
     void print();
+    // remove \"
+    std::string remove(std::string a, char rp = 34);
     std::string name;
     std::string category;
     std::map<std::string, std::string> attributes;
@@ -93,6 +96,7 @@ min_meta::min_meta(json11::Json onelayer)
         }
 
     }
+    this->_Rubber();
 }
 
 min_meta::~min_meta()
@@ -100,6 +104,44 @@ min_meta::~min_meta()
     attributes.clear();
     inputs.clear();
     outputs.clear();
+}
+
+std::string min_meta::remove(std::string a, char rp){
+
+    std::string::iterator it;
+    std::string str = a;
+    for (it = str.begin(); it < str.end(); it++)
+    {
+        if (*it == rp)
+        {
+            str.erase(it);
+            it--;
+            /*
+            it--很重要，因为使用erase()删除it指向的字符后，后面的字符就移了过来，
+            it指向的位置就被后一个字符填充了，而for语句最后的it++，又使it向后移
+            了一个位置，所以就忽略掉了填充过来的这个字符。在这加上it--后就和for
+            语句的it++抵消了，使迭代器能够访问所有的字符。
+            */
+        }
+    }
+    return str;
+}
+
+void min_meta::_Rubber(){
+    this->name = this->remove(this->name);
+    this->category = this->remove(this->category);
+    std::map<std::string, std::string> new_attr;
+    for(auto &k: this->attributes){
+        new_attr[this->remove(k.first)] = this->remove(k.second);
+    }
+    this->attributes.clear();
+    this->attributes = new_attr;
+    for(size_t i = 0; i < this->inputs.size(); i++){
+        this->inputs[i] = this->remove(this->inputs[i]);
+    }
+    for(size_t j = 0; j < this->outputs.size(); j++){
+        this->outputs[j] = this->remove(this->outputs[j]);
+    }
 }
 
 void min_meta::print()
