@@ -3,9 +3,10 @@
   create_time: {
     year: 2021,
     month: 12,
-    day: 21,
-    hour: 21,
-    sec: 52
+    day: 22,
+    hour: 19,
+    min: 15,
+    sec: 3
   },
   version: "v2.1",
   model_name: "holly-model",
@@ -2055,6 +2056,7 @@
       name: "conv2d-index-1",
       type: "Convolution2dLayer",
       input_num: 3,
+      output_num: 1,
       input_id: [
         {
           name: "input",
@@ -2136,6 +2138,7 @@
             key: "padTop",
             require: true,
             buffer_data: "UINT32",
+            buffer_ele_num: 1,
             buffer: [
               0,
               0,

@@ -505,6 +505,7 @@ bool layer_maker::add_attr(std::string key, std::vector<uint8_t> buf)
             {
                 uint32_t datalen = PzkM::datatype_len(attrs.buffer[i].buffer_data);
                 uint32_t ele_num = buf.size()/datalen; 
+                attrs.buffer[i].buffer_ele_num = ele_num;
                 for (size_t j = 0; j < ele_num * datalen; j++)
                 {
                     attrs.buffer[i].buffer.push_back(buf[j]);
