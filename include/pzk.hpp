@@ -317,7 +317,7 @@ public:
     layer_maker();
     layer_maker(min_meta layer_meta, uint32_t layerid, std::string layername);
     ~layer_maker();
-    bool add_input(uint32_t id, std::string input_name = "");    
+    bool add_input(uint32_t id, std::string input_name = "", bool force_set = true);    
     bool add_output(uint32_t id, std::string output_name = "" , bool force_set = true);
     bool add_attr(std::string key, std::vector<uint8_t> buf);
     static DataType string2datatype(std::string a);
@@ -427,8 +427,9 @@ layer_maker::layer_maker(min_meta layer_meta, uint32_t layerid, std::string laye
     output_num = output_id.size();
 }
 // set input for layer
-bool layer_maker::add_input(uint32_t id, std::string input_name)
+bool layer_maker::add_input(uint32_t id, std::string input_name, bool force)
 {
+    bool seted_flag = false;
     if (input_name == "")
     {
         for (size_t i = 0; i < input_id.size(); i++)
@@ -436,7 +437,7 @@ bool layer_maker::add_input(uint32_t id, std::string input_name)
             if (input_id[i].seted == false)
             {
                 input_id[i].tensor_id = id;
-                return true;
+                seted_flag = true;
             }
         }
     }
@@ -447,11 +448,21 @@ bool layer_maker::add_input(uint32_t id, std::string input_name)
             if (input_id[j].name == input_name)
             {
                 input_id[j].tensor_id = id;
-                return true;
+                seted_flag = true;
             }
         }
     }
-    return false;
+    if (seted_flag == false && force){
+        struct Conn one;
+        one.name = input_name;
+        one.seted = true;
+        one.necesary = true;
+        one.tensor_id = id;
+        input_id.push_back(one);
+        seted_flag = true;
+    }
+    this->input_num = this->input_id.size();
+    return seted_flag;
 }
 
 bool layer_maker::add_output(uint32_t id, std::string output_name, bool force_set)
@@ -479,7 +490,7 @@ bool layer_maker::add_output(uint32_t id, std::string output_name, bool force_se
             }
         }
     }
-    if (seted_flag == false)
+    if (seted_flag == false && force_set)
     {
         struct Conn one;
         one.name = output_name;
