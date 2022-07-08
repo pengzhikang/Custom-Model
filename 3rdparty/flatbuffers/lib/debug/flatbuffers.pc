@@ -1,0 +1,9 @@
+libdir=F:/working_pzk/HaveFun/flatbuffers-master/install/lib
+includedir=F:/working_pzk/HaveFun/flatbuffers-master/install/include
+
+Name: FlatBuffers
+Description: Memory Efficient Serialization Library
+Version: 2.0.6
+
+Libs: -L${libdir} -lflatbuffers
+Cflags: -I${includedir}

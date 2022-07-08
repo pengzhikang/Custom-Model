@@ -1,1 +1,0 @@
-flatc -c -o include/  model-flatbuffer/pzk-schema.fbs

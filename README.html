@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>README.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h1 id="ocl-engine%E5%B7%A5%E7%A8%8B%E4%BB%8B%E7%BB%8D">OCL-ENGINE工程介绍</h1>
+<pre><code>《你或许也想拥有专属于自己的AI模型文件格式》这个系列，上一次的文章更新是2022-03-05，距今已经4个月之久了。
+
+主要是这段时间有其他的事情在忙，期间也在断断续续地在完善该推理框架的。而让我思绪卡死的地方就是整网的推理时
+事件依赖问题，这个问题主要是因为OpenCL的clEnqueueNDRangeKernel这个核函数推理函数的局限性问题（正文仔细说明）。
+</code></pre>
+<h3 id="1%E5%89%8D%E8%A8%80">1、前言</h3>
+<p>本次的进展内容：</p>
+<ul>
+<li>完成了整网的推理时框架构建</li>
+<li>根据有向图重排了网络的网络层推理顺序</li>
+<li>根据重排后的网络层的有向图形成了事件依赖</li>
+<li>适配了卷积(Conv2d)算子和池化(Pool2d)算子（编写.cl核函数以及相关适配代码）</li>
+</ul>
+<p>本次文章的主要内容：</p>
+<ul>
+<li>有向图重排网络层的核心算法</li>
+<li>算子适配的过程以及核函数的具体实现(以Conv2d为例)</li>
+<li>初次测试推理框架的推理速度性能</li>
+</ul>
+<p>目前的工程整体结构：</p>
+<pre class="hljs"><code><div>.
+|-- 3rdparty
+|   `-- flatbuffers
+|       |-- bin
+|       |   `-- flatc.exe
+|       |-- include
+|       |   `-- flatbuffers
+|       `-- lib
+|           |-- debug
+|           `-- release
+|-- CMakeLists.txt
+|-- README.md
+|-- build
+|-- clkernel
+|   |-- conv2d.cl
+|   |-- img2col.cl
+|   `-- pool2d.cl
+|-- example
+|   |-- create_model_sample.cpp
+|   `-- main.cpp
+|-- include
+|   |-- CL
+|   |-- model
+|   |   |-- json11.hpp
+|   |   |-- pzk-schema_generated.h
+|   |   `-- pzk.hpp
+|   `-- runtime
+|       |-- builder.hpp
+|       |-- engine.hpp
+|       |-- img2col.hpp
+|       `-- op
+|           |-- allops.hpp
+|           |-- conv2d.hpp
+|           |-- img2col.hpp
+|           `-- pool2d.hpp
+|-- model-flatbuffer
+|   |-- pzk-metadata.json
+|   `-- pzk-schema.fbs
+|-- run.sh
+|-- src
+|   |-- model
+|   |   `-- json11.cpp
+|   `-- runtime
+`-- test-model
+    `-- first.pzkm
+</div></code></pre>
+<h3 id="2%E6%9C%89%E5%90%91%E5%9B%BE%E9%87%8D%E6%8E%92%E7%BD%91%E7%BB%9C%E5%B1%82">2、有向图重排网络层</h3>
+<h4 id="21%E9%87%8D%E6%8E%92%E7%9A%84%E5%8E%9F%E5%9B%A0%E5%92%8C%E7%9B%AE%E7%9A%84">2.1、重排的原因和目的</h4>
+<ul>
+<li>模型的网络层顺序是乱序的：我们自定义的模型中，对应网络层的顺序没有任何要求。因此根据原始的网络层顺序去构建整网的推理时，那么必然会导致推理顺序出现问题，这很可能会导致卡死、结果出错的问题。</li>
+<li>重排网络层有利于形成核函数执行时的事件依赖：也就是如果不进行网络层重排，对于clEnqueueNDRangeKernel的事件依赖参数就无法正确给出，这样我们就无法对推理框架形成异步推理接口。注重事件依赖的原因是：事件依赖保证了网络层的执行顺序，而保证了最终结果的正确性。</li>
+</ul>
+<h4 id="22%E9%87%8D%E6%8E%92%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3">2.2、重排的核心思想</h4>
+<pre><code>如标题所示，重排网络层用到的主要思想就是有向图。而具体的方法是：
+</code></pre>
+<ul>
+<li>1、用有向图抽象出了网络层之间的连接关系，尤其是数据流的流向关系，也就是剥离了网络层的输入输出依赖关系；</li>
+<li>2、找出现在有向图中的所有的根节点RootNodeSet（也就是只有输出没有输入的节点）</li>
+<li>3、这些RootNodeSet作为一个整体部分，作为事件依赖的一个整体节点</li>
+<li>4、去掉现有有向图中的这部分RootNodeSet</li>
+<li>5、更新有向图</li>
+<li>6、如果有向图还有节点，则重复2-5步骤；否则，结束。</li>
+</ul>
+<p>对应的流程图如下所示：</p>
+<pre><code class="language-mermaid"><div class="mermaid">
+graph TB
+    0(开始) --> | 模型文件 | 1[获取有向图]
+    1 --> |有向图| 2{"存在节点"}
+    2 --> |存在| 4[找出根节点]
+    2 --> |不存在| 3(结束)
+    4 --> |RootNodeSet| 5[保存根节点]
+    5 --> 6[移除根节点]
+    6 --> 7[更新有向图]
+    7 --> 2
+
+
+</div></code></pre>
+<h4 id="23%E5%85%B7%E4%BD%93%E7%9A%84%E4%BB%A3%E7%A0%81%E5%A6%82%E4%B8%8B%E6%89%80%E7%A4%BA">2.3、具体的代码如下所示</h4>
+<pre class="hljs"><code><div>    <span class="hljs-comment">/* 返回重排结果的标号信息 */</span>
+    <span class="hljs-function"><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">size_t</span>&gt; <span class="hljs-title">ReSortByDirectedGraph</span><span class="hljs-params">(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt; DirectedGraph)</span></span>{
+        <span class="hljs-comment">/* 运用的主要原理是根节点只有输出没有输入的特性;
+            通过不断去除掉根节点，更新有向图，然后进行操作的时候
+        */</span>
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">size_t</span>&gt; ReSortIndex;
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">size_t</span>&gt; RemainIndex;
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">size_t</span>&gt; RegIndex;
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">size_t</span>&gt; Reg2Index;
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">bool</span>&gt;&gt; BakDirectedGraph = DirectedGraph;
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; DirectedGraph.<span class="hljs-built_in">size</span>(); i++){
+            RemainIndex.push_back(i);
+        }
+        <span class="hljs-comment">/* 1.开始进行根节点获取操作 */</span>
+        ReSortIndex = JudgeRootNode(DirectedGraph);
+        <span class="hljs-comment">/* 2. 移除RemainIndex中的重复点 */</span>
+        RemainIndex = MinusSet(RemainIndex, ReSortIndex);
+        BakDirectedGraph = RemoveDirectedGraph(BakDirectedGraph, ReSortIndex);
+        <span class="hljs-comment">/* 3. 重复上述两个步骤,直到BakDirectedGraph中不存在节点或者是RemainIndex中没有值 */</span>
+        <span class="hljs-keyword">while</span>(RemainIndex.<span class="hljs-built_in">size</span>() &gt; <span class="hljs-number">0</span> &amp;&amp; BakDirectedGraph.<span class="hljs-built_in">size</span>() &gt; <span class="hljs-number">0</span> &amp;&amp; ReSortIndex.<span class="hljs-built_in">size</span>() &lt; DirectedGraph.<span class="hljs-built_in">size</span>()){
+            Reg2Index.<span class="hljs-built_in">clear</span>();
+            RegIndex = JudgeRootNode(BakDirectedGraph);
+            <span class="hljs-comment">/* 加入到ReSortIndex中 */</span>
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> i:RegIndex){
+                ReSortIndex.push_back(RemainIndex[i]);
+                Reg2Index.push_back(RemainIndex[i]);
+            }
+            RemainIndex = MinusSet(RemainIndex, Reg2Index);
+            BakDirectedGraph = RemoveDirectedGraph(BakDirectedGraph, RegIndex);
+        }
+        <span class="hljs-keyword">return</span> ReSortIndex;
+    }
+
+</div></code></pre>
+<h3 id="3%E7%AE%97%E5%AD%90%E9%80%82%E9%85%8D%E8%BF%87%E7%A8%8B%E4%BB%A5conv2d%E7%AE%97%E5%AD%90%E4%BD%9C%E4%B8%BA%E5%85%B7%E4%BD%93%E8%AF%B4%E6%98%8E">3、算子适配过程（以Conv2d算子作为具体说明）</h3>
+<h4 id="31%E8%B7%9F%E6%95%B4%E4%BD%93%E6%8E%A8%E7%90%86%E6%A1%86%E6%9E%B6%E7%9A%84%E6%8E%A5%E5%85%A5">3.1、跟整体推理框架的接入</h4>
+<ul>
+<li>
+<p>1、cl算子编写在clkernel文件夹内（比如clkernel/conv2d.cl）</p>
+</li>
+<li>
+<p>2、在include/runtime/op中增加算子头文件（比如conv2d.hpp）</p>
+</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"runtime/engine.hpp"</span></span>
+
+<span class="hljs-keyword">namespace</span> OCLEngine{
+    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Conv2dCfg</span>{</span>
+        cl_mem* input = <span class="hljs-literal">NULL</span>;
+        cl_mem* weights = <span class="hljs-literal">NULL</span>;
+        cl_mem* biases = <span class="hljs-literal">NULL</span>;
+        cl_mem* output = <span class="hljs-literal">NULL</span>;
+        NodeEvent event;
+        uint batchSize = <span class="hljs-number">1</span>;
+        uint inputChannels;
+        uint inputWidth;
+        uint inputHeight;
+        uint kernelWidth;
+        uint kernelHeight;
+        uint padTop = <span class="hljs-number">0</span>;
+        uint padRight = <span class="hljs-number">0</span>;
+        uint padBottom = <span class="hljs-number">0</span>;
+        uint padLeft = <span class="hljs-number">0</span>;
+        uint strideX;
+        uint strideY;
+        <span class="hljs-keyword">size_t</span> outputChannels;
+        <span class="hljs-keyword">size_t</span> outputHeight;
+        <span class="hljs-keyword">size_t</span> outputWeight;
+    };
+
+    <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Conv2dLayer</span> :</span> <span class="hljs-keyword">public</span> CLFunction{
+    <span class="hljs-keyword">private</span>:
+        Conv2dCfg cfg;
+        cl_kernel kernel = <span class="hljs-literal">NULL</span>;
+        <span class="hljs-keyword">size_t</span>* globalWorkSize = <span class="hljs-literal">NULL</span>;
+        <span class="hljs-keyword">size_t</span>* localWorkSize = <span class="hljs-literal">NULL</span>;
+        cl_uint work_dim = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">bool</span> useful = <span class="hljs-literal">false</span>;
+        cl_int Conv2derrNum = CL_SUCCESS;
+    <span class="hljs-keyword">public</span>:
+        Conv2dLayer() = <span class="hljs-keyword">default</span>;
+        ~Conv2dLayer(){
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>-&gt;globalWorkSize != <span class="hljs-literal">NULL</span>){
+                <span class="hljs-built_in">free</span>(<span class="hljs-keyword">this</span>-&gt;globalWorkSize);
+            }
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>-&gt;localWorkSize != <span class="hljs-literal">NULL</span>){
+                <span class="hljs-built_in">free</span>(<span class="hljs-keyword">this</span>-&gt;localWorkSize);
+            }
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>-&gt;kernel != <span class="hljs-literal">NULL</span>){
+                clReleaseKernel(kernel);
+            }
+        };
+        <span class="hljs-comment">// 配置函数</span>
+        <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">configure</span><span class="hljs-params">(Conv2dCfg conf)</span></span>{
+            <span class="hljs-keyword">this</span>-&gt;cfg  = conf;
+            <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>&gt; buildOptions;
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>-&gt;cfg.biases != <span class="hljs-literal">NULL</span>){
+                <span class="hljs-comment">/* 如果有bias，则进行如下所示的编译命令 */</span>
+                buildOptions.push_back(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"-D HASBIAS"</span>));
+            }
+            <span class="hljs-comment">/* 1、获取对应的核心 */</span>
+            <span class="hljs-keyword">this</span>-&gt;kernel = ProgramManager.GetKernel(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"conv2d.cl"</span>), buildOptions, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"convolutionNaive"</span>));
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>-&gt;kernel == <span class="hljs-literal">NULL</span>){
+                <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Get convolutionNaive kernel of conv2d.cl Failed\n"</span>);
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            }
+            <span class="hljs-comment">/* 2、对核心进行相应的参数设置 */</span>
+            cl_uint arg_idx = <span class="hljs-number">0</span>;
+            Conv2derrNum = clSetKernelArg(kernel,arg_idx,<span class="hljs-keyword">sizeof</span> (cl_mem),
+                                    <span class="hljs-keyword">this</span>-&gt;cfg.input);
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (uint), <span class="hljs-keyword">this</span>-&gt;cfg.weights);
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>-&gt;cfg.biases != <span class="hljs-literal">NULL</span>)
+                Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (cl_mem),<span class="hljs-keyword">this</span>-&gt;cfg.biases);
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (uint),&amp;(<span class="hljs-keyword">this</span>-&gt;cfg.batchSize));
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (uint),&amp;(<span class="hljs-keyword">this</span>-&gt;cfg.inputChannels));
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (uint),&amp;(<span class="hljs-keyword">this</span>-&gt;cfg.inputWidth));
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (uint),&amp;(<span class="hljs-keyword">this</span>-&gt;cfg.inputHeight));
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (uint),&amp;(<span class="hljs-keyword">this</span>-&gt;cfg.kernelWidth));
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (uint),&amp;(<span class="hljs-keyword">this</span>-&gt;cfg.kernelHeight));
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (uint),&amp;(<span class="hljs-keyword">this</span>-&gt;cfg.padTop));
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (uint),&amp;(<span class="hljs-keyword">this</span>-&gt;cfg.padRight));
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (uint),&amp;(<span class="hljs-keyword">this</span>-&gt;cfg.padBottom));
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (uint),&amp;(<span class="hljs-keyword">this</span>-&gt;cfg.padLeft));
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (uint),&amp;(<span class="hljs-keyword">this</span>-&gt;cfg.strideX));
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (uint),&amp;(<span class="hljs-keyword">this</span>-&gt;cfg.strideY));
+            Conv2derrNum |= clSetKernelArg(kernel,++arg_idx,<span class="hljs-keyword">sizeof</span> (cl_mem),<span class="hljs-keyword">this</span>-&gt;cfg.output);
+            <span class="hljs-keyword">if</span> (Conv2derrNum != CL_SUCCESS){
+                <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Set kernel Arguments Failed On Conv2d Layers\n"</span>);
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            }
+            <span class="hljs-comment">/* 3、 设置全局尺寸和局部尺寸大小，以便于后续的加入命令队列操作 */</span>
+            <span class="hljs-keyword">this</span>-&gt;work_dim = <span class="hljs-number">3</span>;
+            <span class="hljs-keyword">this</span>-&gt;globalWorkSize = (<span class="hljs-keyword">size_t</span>*)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">size_t</span>) * <span class="hljs-keyword">this</span>-&gt;work_dim);
+            <span class="hljs-keyword">this</span>-&gt;globalWorkSize[<span class="hljs-number">0</span>] = <span class="hljs-keyword">this</span>-&gt;cfg.batchSize * <span class="hljs-keyword">this</span>-&gt;cfg.outputChannels;
+            <span class="hljs-keyword">this</span>-&gt;globalWorkSize[<span class="hljs-number">1</span>] = <span class="hljs-keyword">this</span>-&gt;cfg.outputHeight;
+            <span class="hljs-keyword">this</span>-&gt;globalWorkSize[<span class="hljs-number">2</span>] = <span class="hljs-keyword">this</span>-&gt;cfg.outputWeight;
+            <span class="hljs-keyword">this</span>-&gt;localWorkSize = (<span class="hljs-keyword">size_t</span>*)<span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-keyword">size_t</span>) * <span class="hljs-keyword">this</span>-&gt;work_dim);
+            <span class="hljs-keyword">this</span>-&gt;localWorkSize[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">this</span>-&gt;localWorkSize[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span>;
+            <span class="hljs-keyword">this</span>-&gt;localWorkSize[<span class="hljs-number">2</span>] = <span class="hljs-number">1</span>;
+            useful = <span class="hljs-literal">true</span>;
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        };
+        <span class="hljs-comment">// 重载函数，主要的run函数</span>
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span></span>{
+            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>-&gt;useful){
+                <span class="hljs-keyword">this</span>-&gt;Conv2derrNum = clEnqueueNDRangeKernel(commandQueue,
+                                                            <span class="hljs-keyword">this</span>-&gt;kernel,
+                                                            <span class="hljs-keyword">this</span>-&gt;work_dim,
+                                                            <span class="hljs-literal">NULL</span>,
+                                                            <span class="hljs-keyword">this</span>-&gt;globalWorkSize,
+                                                            <span class="hljs-keyword">this</span>-&gt;localWorkSize,
+                                                            <span class="hljs-keyword">this</span>-&gt;cfg.event.wait_event.num,
+                                                            <span class="hljs-keyword">this</span>-&gt;cfg.event.wait_event.event,
+                                                            <span class="hljs-keyword">this</span>-&gt;cfg.event.this_event.event);
+                <span class="hljs-keyword">if</span> (<span class="hljs-keyword">this</span>-&gt;Conv2derrNum != CL_SUCCESS){
+                    <span class="hljs-built_in">printf</span>(<span class="hljs-string">"Inference Conv2d Layers Failed\n"</span>);
+                    <span class="hljs-keyword">return</span>;
+                }
+            }<span class="hljs-keyword">else</span>{
+                <span class="hljs-built_in">printf</span>(<span class="hljs-string">"This Conv2d Layers is useless\n"</span>);
+                <span class="hljs-keyword">return</span>;
+            }
+        };
+        <span class="hljs-comment">/* cpu推理函数，主要用于测试 
+            此时，因为其父类拥有这个
+        */</span>
+        <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">cpu_run</span><span class="hljs-params">()</span> <span class="hljs-keyword">override</span></span>{
+
+        };
+    };
+}
+</div></code></pre>
+<ul>
+<li>3、在include/runtime/op/allops.hpp中新增对接代码</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-comment">/* 2.1、增加对应算子头 */</span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">"runtime/op/conv2d.hpp"</span></span>
+<span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;memory&gt;</span></span>
+<span class="hljs-keyword">namespace</span> OCLEngine{
+    <span class="hljs-comment">/* ... */</span>
+    <span class="hljs-comment">/* 2.2、conv2d网络层的构建 */</span>
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">add_conv2d_layer</span><span class="hljs-params">(layer_maker l, NodeEvent node_event, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;TensorsS&gt; input, <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;TensorsS&gt; output)</span></span>{
+        Conv2dCfg cfg;
+        cfg.input = l.get_input_id(<span class="hljs-string">"input"</span>) != <span class="hljs-number">-1</span> ? &amp;(clmem[l.get_input_id(<span class="hljs-string">"input"</span>)]):<span class="hljs-literal">NULL</span>;
+        cfg.weights = l.get_input_id(<span class="hljs-string">"weights"</span>) != <span class="hljs-number">-1</span> ? &amp;(clmem[l.get_input_id(<span class="hljs-string">"weights"</span>)]):<span class="hljs-literal">NULL</span>;
+        cfg.biases = l.get_input_id(<span class="hljs-string">"biases"</span>) != <span class="hljs-number">-1</span> ? &amp;(clmem[l.get_input_id(<span class="hljs-string">"biases"</span>)]):<span class="hljs-literal">NULL</span>;
+        cfg.output = l.get_output_id(<span class="hljs-string">"conv2d-output"</span>) != <span class="hljs-number">-1</span> ? &amp;(clmem[l.get_output_id(<span class="hljs-string">"conv2d-output"</span>)]):<span class="hljs-literal">NULL</span>;
+        <span class="hljs-keyword">if</span> (cfg.input == <span class="hljs-literal">NULL</span> || cfg.weights == <span class="hljs-literal">NULL</span> || cfg.output == <span class="hljs-literal">NULL</span>){
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+        cfg.event = node_event;
+        TensorsS input_tensor = input[find_tensor_by_id(input, l.get_input_id(<span class="hljs-string">"input"</span>))];
+        cfg.batchSize = input_tensor.shape.dims[<span class="hljs-number">0</span>];
+        cfg.inputChannels = input_tensor.shape.dims[<span class="hljs-number">1</span>];
+        cfg.inputHeight = input_tensor.shape.dims[<span class="hljs-number">2</span>];
+        cfg.inputWidth = input_tensor.shape.dims[<span class="hljs-number">3</span>];
+        TensorsS weight_tensor = input[find_tensor_by_id(input, l.get_input_id(<span class="hljs-string">"weights"</span>))];
+        cfg.kernelHeight = weight_tensor.shape.dims[<span class="hljs-number">2</span>];
+        cfg.kernelWidth = weight_tensor.shape.dims[<span class="hljs-number">3</span>];
+        cfg.padTop = l.get_attr&lt;uint&gt;(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"padTop"</span>)).<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span> ? <span class="hljs-number">0</span>:l.get_attr&lt;uint&gt;(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"padTop"</span>))[<span class="hljs-number">0</span>];
+        cfg.padRight = l.get_attr&lt;uint&gt;(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"padRight"</span>)).<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span> ? <span class="hljs-number">0</span>:l.get_attr&lt;uint&gt;(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"padRight"</span>))[<span class="hljs-number">0</span>];
+        cfg.padBottom = l.get_attr&lt;uint&gt;(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"padBottom"</span>)).<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span> ? <span class="hljs-number">0</span>:l.get_attr&lt;uint&gt;(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"padBottom"</span>))[<span class="hljs-number">0</span>];
+        cfg.padLeft = l.get_attr&lt;uint&gt;(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"padLeft"</span>)).<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span> ? <span class="hljs-number">0</span>:l.get_attr&lt;uint&gt;(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"padLeft"</span>))[<span class="hljs-number">0</span>];
+        cfg.strideX = l.get_attr&lt;uint&gt;(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"strideX"</span>)).<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span> ? cfg.kernelWidth:l.get_attr&lt;uint&gt;(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"strideX"</span>))[<span class="hljs-number">0</span>];
+        cfg.strideY = l.get_attr&lt;uint&gt;(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"strideY"</span>)).<span class="hljs-built_in">size</span>() == <span class="hljs-number">0</span> ? cfg.kernelHeight:l.get_attr&lt;uint&gt;(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">string</span>(<span class="hljs-string">"strideY"</span>))[<span class="hljs-number">0</span>];
+        TensorsS output_tensor = output[find_tensor_by_id(output, l.get_output_id(<span class="hljs-string">"conv2d-output"</span>))];
+        cfg.outputChannels = output_tensor.shape.dims[<span class="hljs-number">1</span>];
+        cfg.outputHeight = output_tensor.shape.dims[<span class="hljs-number">2</span>];
+        cfg.outputWeight = output_tensor.shape.dims[<span class="hljs-number">3</span>];
+        <span class="hljs-comment">/* 正式构建卷积层 */</span>
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">shared_ptr</span>&lt;Conv2dLayer&gt; conv2d = <span class="hljs-built_in">std</span>::make_shared&lt;Conv2dLayer&gt;();
+        <span class="hljs-keyword">if</span> (conv2d-&gt;configure(cfg) == <span class="hljs-literal">false</span>){
+            <span class="hljs-built_in">printf</span>(<span class="hljs-string">"conv2d make failed\n"</span>);
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }<span class="hljs-keyword">else</span>{
+            AllLayers.push_back(conv2d);
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+    }
+
+    <span class="hljs-comment">/* 构建运行时的网络层 */</span>
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">BuildLayers</span><span class="hljs-params">(PzkM model)</span></span>{
+        <span class="hljs-keyword">bool</span> ret = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">size_t</span> i = <span class="hljs-number">0</span>; i &lt; model.rLayers.<span class="hljs-built_in">size</span>(); i++){
+            <span class="hljs-comment">/* 进行各种不同类型的选择 */</span>
+            <span class="hljs-keyword">if</span> (onelayer.type == <span class="hljs-string">"img2col"</span>){
+            }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (onelayer.type == <span class="hljs-string">"Convolution2dLayer"</span>){
+                <span class="hljs-comment">/* 2.2、增加上述函数的调用 */</span>
+                ret = add_conv2d_layer(onelayer, node_event, input_tensor, output_tensor);
+            }<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (onelayer.type == <span class="hljs-string">"Pooling2dLayer"</span>){
+            }
+            <span class="hljs-keyword">else</span>{
+                <span class="hljs-built_in">printf</span>(<span class="hljs-string">"unknown type = %s layer, cant't finish it\n"</span>, onelayer.type.c_str());
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            }
+            <span class="hljs-comment">/* 查看是否正确与否 */</span>
+            <span class="hljs-keyword">if</span> (!ret){
+                <span class="hljs-built_in">printf</span>(<span class="hljs-string">"failed to build type=%s, name=%s Layers\n"</span>, onelayer.type.c_str(), onelayer.name.c_str());
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            }
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+}
+</div></code></pre>
+<h4 id="32cl%E7%AE%97%E5%AD%90%E4%BB%8B%E7%BB%8D">3.2、CL算子介绍</h4>
+<p>实际cl核函数如下所示：</p>
+<pre class="hljs"><code><div>__kernel
+void convolutionNaive(__global const float* input,
+            __global const float* weights,
+#ifdef HASBIAS
+            __global const float* biases,
+#endif
+            const uint batchSize,
+            const uint inputChannels,
+            const uint inputWidth,
+            const uint inputHeight,
+            const uint kernelWidth,
+            const uint kernelHeight,
+            const uint padTop,
+            const uint padRight,
+            const uint padBottom,
+            const uint padLeft,
+            const uint strideX,
+            const uint strideY,
+            __global float* output
+            ){
+  int outputChannels = get_global_size(0) / batchSize;
+  int outputHeight = get_global_size(1);
+  int outputWeight = get_global_size(2);
+  /* NC融合进行之后，如何拆分出相应维度
+    错误示例如下：
+    解释：会导致实际分配不正确，当batchSize=1，OutputChannels=10的时候，发现oc===0，明显出错。
+    int b = get_global_id(0) / batchSize;
+    int oc = get_global_id(0) % batchSize;
+   */
+  int b = get_global_id(0) / outputChannels;/* batchSize被融入到第一个并行度中，N*C */
+  int oc = get_global_id(0) % outputChannels;
+  int ohx = get_global_id(1); // [0, col_chw)
+  int owy = get_global_id(2);
+  uint output_offset = b * outputChannels * outputHeight * outputWeight + oc * outputHeight * outputWeight + ohx * outputWeight + owy;
+  uint input_feature_map_size = inputHeight * inputWidth;
+  uint input_one_size = inputChannels * input_feature_map_size;
+  uint weight_feature_map_size = kernelWidth * kernelHeight;
+  uint weight_one_size = inputChannels * weight_feature_map_size;
+// /* 定义一次卷积的长度=kernelWidth乘kernelHeight */
+// #define CalSize 10
+//   local float input_reg[CalSize];
+//   local float weights_reg[CalSize];
+  /*
+  [ohx, owy]表示输出特征图的x,y点坐标
+  我们需要从输出映射到输入的坐标值，需要考虑到Pad的偏移等因素。
+  */
+  float result = 0.0;
+  int padinputWidthMax = padLeft + inputWidth;
+  int padinputHeightMax = padBottom + inputHeight;
+  int ihx = ohx * strideX;
+  int iwy = owy * strideY;
+  /* 首先只进行卷积的weight乘加 */
+  for (uint i = 0; i &lt; kernelHeight; i++){
+    if (ihx + i &lt; padTop || ihx + i &gt;= padinputHeightMax){
+        continue;
+    }else{
+        for (uint j = 0; j &lt; kernelWidth; j++){
+            if (iwy + j &lt; padRight || iwy + j &gt;= padinputWidthMax){
+                continue;
+            }else{
+                /* 此时表示没有超出卷积的尺寸范围之外，所以需要进行卷积操作 */
+                uint one_featuremap_offset = (ihx + i - padTop) * inputWidth + (iwy + j - padRight);
+                uint one_weight_offset = i * kernelWidth + j;
+                for (uint ic = 0; ic &lt; inputChannels; ic++){
+                    uint input_ptr = b * input_one_size + ic * input_feature_map_size + one_featuremap_offset;
+                    uint weight_ptr = oc * weight_one_size + ic * weight_one_size + one_weight_offset;
+                    result += (input[input_ptr] * weights[weight_ptr]);
+                }
+            }
+        }
+    }
+  }
+  /* 然后进行bias的相加 */
+#ifdef HASBIAS
+  result += biases[oc];
+#endif
+  output[output_offset] = result;
+}
+</div></code></pre>
+<p>解释说明：</p>
+<ul>
+<li>假设卷积层的输出尺寸为[N,C,H,W],并行工作维度设置为3,其工作项数目分别是[N*C,H,W]</li>
+<li>使用opencl的预编译指令优化和函数：当存在bias权重时，设置HASBIAS开始bias计算</li>
+<li>一个工作项只处理一个输出数据，实现最大并行度。</li>
+</ul>
+<h4 id="33%E6%8E%A8%E7%90%86%E6%80%A7%E8%83%BD%E6%B5%8B%E8%AF%95">3.3、推理性能测试</h4>
+<p>测试条件如下所示：</p>
+<ul>
+<li>硬件环境：处理器Intel(R) Xeon(R) Silver 4110 CPU @ 2.10GH，32核心</li>
+<li>软件环境：Intel-CPU-OpenCL-SDK-64bit，GCC编译，Linux-Ubuntu18.64</li>
+<li>测试环境：10000次，异步推理，float推理</li>
+<li>测试模型：如下所示</li>
+</ul>
+<pre><code class="language-mermaid"><div class="mermaid">
+graph TB
+    0(输入) --> |"[1,3,416,416]"| 1["卷积 核[10,3,4,4]"]
+    1 --> |"[1,10,104,104]"| 2["池化 核[2,2]"]
+    2 --> |"[1,10,52,52]"| 3(输出)
+
+</div></code></pre>
+<p>测试结果如下所示：</p>
+<pre class="hljs"><code><div>There is no GPU,trying CPU……
+Result: open ../model-flatbuffer/pzk-metadata.json success
+&lt;--------------------------------------&gt;
+DirectedGraph Mat:
+False, True , False, False, 
+False, False, True , False, 
+False, False, False, True , 
+False, False, False, False, 
+&lt;--------------------------------------&gt;
+&lt;--------------------------------------&gt;
+DirectedGraph Mat:
+False, True , 
+False, False, 
+&lt;--------------------------------------&gt;
+depend of event is 
+node=0---&gt;[dpnum=0,dphead=-1,thisid=0]
+node=1---&gt;[dpnum=1,dphead=0,thisid=1]
+node=2---&gt;[dpnum=1,dphead=1,thisid=2]
+node=3---&gt;[dpnum=1,dphead=2,thisid=-1]
+inference time is 480.458 fps
+</div></code></pre>
+<p>结果显示：</p>
+<ul>
+<li>该模型在该cpu上能够实现480fps的帧率，成绩还算不错。</li>
+<li>使用htop工具可观察出在推理的时候CPU占用率高，所有核心都被利用起来了，适合多核CPU推理。</li>
+</ul>
+
+</body>
+</html>

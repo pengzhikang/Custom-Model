@@ -1,0 +1,19 @@
+
+	{
+	    "configurations": [
+	        {
+	            "name": "Linux",
+	            "includePath": [
+	                "${workspaceFolder}/**",
+					"${workspaceFolder}/include",
+					"${workspaceFolder}/3rdparty/flatbuffers/include",
+	                "/usr/local/include",
+					"/usr/include"
+	            ],
+	            "defines": [],
+	            "cStandard": "c11",
+	            "cppStandard": "c++14"
+	        }
+	    ],
+	    "version": 4
+}

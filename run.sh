@@ -1,17 +1,15 @@
-if [ ! -f include/pzk-schema_generated.h ]; then
-    flatc -c -o include/  model-flatbuffer/pzk-schema.fbs
-fi
-if [ ! -d "./build" ]; then
+if [ ! -d build ]; then
     mkdir build
+else
+    rm -rf build/*
 fi
-if [ -f first.json ]; then
-    rm first.json
+if [ -e test]; then
+    rm test
 fi
-rm -rf build/*
 cd build
-cmake ..
-make -j16
-cd release
-./first_model --json ../../model-flatbuffer/pzk-metadata.json
-cd ../..
-flatc --raw-binary -t model-flatbuffer/pzk-schema.fbs -- build/release/first.pzkm
+rm -rf ./*
+cmake -DCMAKE_BUILD_TYPE=Release ..
+make -j32
+./test ../model-flatbuffer/pzk-metadata.json ../test-model/first.pzkm 
+cd ..
+# ./test
