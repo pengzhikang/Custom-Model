@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unordered_map>
+#include <math.h>
 #ifdef _APPLE_
 #include <OpenCL/cl.h>
 #else
@@ -334,14 +335,14 @@ namespace OCLEngine {
             bool A = true;
             size_t MapSize = Map.size();
             for (size_t i = 0; i < MapSize; i++){
-                /*行*/
+                //行
                 int htrueNum = 0;
                 for (size_t k = 0; k < MapSize; k++){
                     if (Map[i][k]){
                         htrueNum++;
                     }
                 }
-                /*列*/
+                //列
                 int ltrueNum = 0;
                 for (size_t k = 0; k < MapSize; k++){
                     if (Map[k][i]){
@@ -400,7 +401,7 @@ namespace OCLEngine {
             if (clp == NULL){
                 return NULL;
             }
-            /* 创建OpenCL内核 */
+            // 创建OpenCL内核
             cl_kernel kernel = clCreateKernel(clp, kernelName.c_str(),NULL);
             if (kernel == NULL)
             {
@@ -504,6 +505,25 @@ namespace OCLEngine {
             return true;
         }
     }
+
+
+    bool ReadCLMem(cl_mem* clmem, void* dest, size_t num){
+        if (clmem == NULL || dest == NULL || num == 0){
+           // 未创建过对应的cl_mem对象
+           return false; 
+        }
+        else{
+            errNum = clEnqueueReadBuffer(commandQueue, *clmem, CL_TRUE, 0,
+                                        num,
+                                        dest, 0, NULL, NULL);
+            if (errNum != CL_SUCCESS){
+                printf("Error reading clmem buffer (errCode=%d)\n", errNum);
+                return false;
+            }
+            return true;
+        }
+    }
+
     /*
     @设置模型输入one
     */
@@ -548,6 +568,24 @@ namespace OCLEngine {
             errNum = clEnqueueWriteBuffer(commandQueue, clmem[one->id], CLSynchronize, 0,
                                         PzkM::shape2size(one->shape.dims)*datalen(one->data_type),
                                         src, events_num, clevents, this_events);
+            if (errNum != CL_SUCCESS){
+                printf("Error write clmem buffer\n");
+                return false;
+            }
+            return true;
+        }
+    }
+
+
+    /* 写入特定的cpu源数据到cl_mem中 */
+    bool WriteCLMem(cl_mem* clmem, void* src, size_t num){
+        if (clmem == NULL || src == NULL || num == 0){
+            return false;
+        }
+        else{
+            errNum = clEnqueueWriteBuffer(commandQueue, *clmem, CL_TRUE, 0,
+                                        num,
+                                        src, 0, NULL, NULL);
             if (errNum != CL_SUCCESS){
                 printf("Error write clmem buffer\n");
                 return false;
@@ -622,6 +660,44 @@ namespace OCLEngine {
             Cleanup();
             return;
         }
+    }
+
+    /* 下述是精度对比的相关函数 */
+
+/*----------------------quadraticSum函数用途-------------------------------*/
+    //用途：这是一个归一化的函数，将输出特征进行归一化操作
+    template <typename T>
+    void quadraticSum(T* packFeature, size_t fea_size)
+    {
+        double squre = 0.0;
+        for (size_t i = 0; i < fea_size; i++)
+        {
+            squre += (double)(packFeature[i] * packFeature[i]);
+        }
+        double root = std::sqrt(squre);
+        for (size_t i = 0; i < fea_size; i++)
+        {
+            packFeature[i] = (T)(packFeature[i]/root);
+        }
+
+        return;
+    }
+
+
+    /*----------------------dotProduct函数用途-------------------------------*/
+    //用途：这是一个计算欧式距离的函数，用于计算两个输出特征的欧氏距离
+    template <typename T>
+    double CosineSimilarity(T* fea1, T* fea2, size_t fea_size)
+    {
+        double product = 0.0;
+        quadraticSum(fea1, fea_size);
+        quadraticSum(fea2, fea_size);
+
+        for (size_t i = 0; i < fea_size; i++)
+        {
+            product = product + (double)(fea1[i] * fea2[i]);
+        }
+        return 0.5 * product + 0.5;
     }
 }
 #endif

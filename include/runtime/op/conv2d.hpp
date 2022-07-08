@@ -122,7 +122,84 @@ namespace OCLEngine{
             此时，因为其父类拥有这个
         */
         void cpu_run() override{
+            size_t input_num = sizeof(float) * this->cfg.batchSize * this->cfg.inputChannels * this->cfg.inputWidth * this->cfg.inputHeight;
+            size_t weight_num = sizeof(float) * this->cfg.outputChannels * this->cfg.inputChannels * this->cfg.kernelWidth * this->cfg.kernelHeight;
+            size_t bias_num = (this->cfg.biases == NULL) ? 0: this->cfg.outputChannels * sizeof(float);
+            size_t output_num = sizeof(float) * this->cfg.batchSize * this->cfg.outputChannels * this->cfg.outputHeight * this->cfg.outputWeight;
+            float* input = (float*)malloc(input_num);
+            float* weights = (float*)malloc(weight_num);
+            float* biases = (bias_num == 0) ? NULL:(float*)malloc(bias_num);
+            float* output = (float*)malloc(output_num);
+            float* cl_output = (float*)malloc(output_num);
+            /* 读取cl_mem到cpu内存上 */
+            ReadCLMem(this->cfg.input, input, input_num);
+            ReadCLMem(this->cfg.weights, weights, weight_num);
+            if (biases != NULL)
+                ReadCLMem(this->cfg.biases, biases, bias_num);
+            ReadCLMem(this->cfg.output, cl_output, output_num);
+            /* 进行cpu conv2d操作 */
+            for(size_t b = 0; b < this->cfg.batchSize; b++){
+                for (size_t oc = 0; oc < this->cfg.outputChannels; oc++){
+                    for(size_t ohx = 0; ohx < this->cfg.outputHeight; ohx++){
+                        for(size_t owy = 0; owy < this->cfg.outputWeight; owy++){
+                            uint output_offset = b * this->cfg.outputChannels * this->cfg.outputHeight * this->cfg.outputWeight + oc * this->cfg.outputHeight * this->cfg.outputWeight + ohx * this->cfg.outputWeight + owy;
+                            uint input_feature_map_size = this->cfg.inputHeight * this->cfg.inputWidth;
+                            uint input_one_size = this->cfg.inputChannels * input_feature_map_size;
+                            uint weight_feature_map_size = this->cfg.kernelWidth * this->cfg.kernelHeight;
+                            uint weight_one_size = this->cfg.inputChannels * weight_feature_map_size;
+                            // /* 定义一次卷积的长度=kernelWidth乘kernelHeight */
+                            // #define CalSize 10
+                            //   local float input_reg[CalSize];
+                            //   local float weights_reg[CalSize];
+                            /*
+                            [ohx, owy]表示输出特征图的x,y点坐标
+                            我们需要从输出映射到输入的坐标值，需要考虑到Pad的偏移等因素。
+                            */
+                            float result = 0.0;
+                            int padinputWidthMax = this->cfg.padLeft + this->cfg.inputWidth;
+                            int padinputHeightMax = this->cfg.padBottom + this->cfg.inputHeight;
+                            int ihx = ohx * this->cfg.strideX;
+                            int iwy = owy * this->cfg.strideY;
+                            /* 首先只进行卷积的weight乘加 */
+                            for (uint i = 0; i < this->cfg.kernelHeight; i++){
+                                if (ihx + i < this->cfg.padTop || ihx + i >= padinputHeightMax){
+                                    continue;
+                                }else{
+                                    for (uint j = 0; j < this->cfg.kernelWidth; j++){
+                                        if (iwy + j < this->cfg.padRight || iwy + j >= padinputWidthMax){
+                                            continue;
+                                        }else{
+                                            /* 此时表示没有超出卷积的尺寸范围之外，所以需要进行卷积操作 */
+                                            uint one_featuremap_offset = (ihx + i - this->cfg.padTop) * this->cfg.inputWidth + (iwy + j - this->cfg.padRight);
+                                            uint one_weight_offset = i * this->cfg.kernelWidth + j;
+                                            for (uint ic = 0; ic < this->cfg.inputChannels; ic++){
+                                                uint input_ptr = b * input_one_size + ic * input_feature_map_size + one_featuremap_offset;
+                                                uint weight_ptr = oc * weight_one_size + ic * weight_one_size + one_weight_offset;
+                                                result += (input[input_ptr] * weights[weight_ptr]);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            /* 然后进行bias的相加 */
+                            if (biases != NULL)
+                                result += biases[oc];
+                            output[output_offset] = result;
+                        }
+                    }
+                }
+            }
 
+            /* 进行对比操作 */
+            double cos_sim = CosineSimilarity<float>(cl_output, output, output_num/sizeof(float));
+            printf("conv2d CosineSimilarity value = %.10lf\n", cos_sim * 100.0);
+            free(input);
+            free(weights);
+            if (biases != NULL)
+                free(biases);
+            free(output);
+            free(cl_output);
+            return;
         };
     };
 }

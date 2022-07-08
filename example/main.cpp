@@ -60,13 +60,14 @@ void simple_using(char** argv){
     /* 5.自行对上述空间导入输入
         5.进行推理 */
     OCLEngine::SetExecutionModel(OCLEngine::ExecutionModel::ASYNCHRONOUS);/* 设置为 */
-    size_t loopnum = 10000;
+    size_t loopnum = 1;
     double time1 = get_current_time();
     for(size_t i = 0; i < loopnum; i++){
         OCLEngine::Inference();
         if(OCLEngine::WaitFinish() == false){
             printf("error when waiting finish\n");
         }
+        OCLEngine::InferenceDebugByCpu();
     }
     double time2 = get_current_time();
     printf("inference time is %.3f fps\n", 1000.f/((time2 - time1)/loopnum));

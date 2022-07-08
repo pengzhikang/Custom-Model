@@ -527,4 +527,18 @@ namespace OCLEngine{
         // }
         return true;
     }
+    /* 进行推理的接口 */
+    bool InferenceDebugByCpu(){
+        /* 配合上述Inference接口使用，确保cl_mem数据全部被赋值，同时没被使用 */
+        for(size_t i = 0; i < AllLayers.size(); i++){
+            AllLayers[i]->cpu_run();
+        }
+        // for(auto it1=output_tensors.begin(); it1 != output_tensors.end(); it1++){
+        //     if(ReadCLMem(&output_tensors[it1->first], cpu_mem[it1->second.id]) == false){
+        //         printf("read CLmem in inference, which id = %d\n", it1->second.id);
+        //         return false;
+        //     }
+        // }
+        return true;
+    }
 }
